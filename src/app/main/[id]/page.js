@@ -67,7 +67,7 @@ export default function Range() {
       </div>
       <div className=" flex flex-col gap-2">
         <header className=" flex justify-between items-center">
-          <p className=" text-2xl font-bold">BASICS</p>
+          <p className=" text-lg font-bold">BASICS</p>
           <Button size={"icon"}>
             <PlusSquareIcon />
           </Button>
@@ -78,7 +78,7 @@ export default function Range() {
               return (
                 <div
                   key={b.id}
-                  className=" w-[200px] h-[200px] flex flex-col bg-amber-300 p-2"
+                  className=" w-[200px] aspect-video flex flex-col bg-amber-300 p-2"
                 >
                   <p className=" w-full text-center text-lg font-bold">
                     {b.description}
