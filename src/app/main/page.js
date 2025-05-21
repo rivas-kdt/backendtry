@@ -10,7 +10,7 @@ export default function MainScreen() {
       </div>
       <div className=" flex flex-col gap-2">
         <header className=" flex justify-between items-center">
-          <p className=" text-2xl font-bold">BASICS</p>
+          <p className=" text-xl font-bold">BASICS</p>
           <Button size={"icon"}>
             <PlusSquareIcon />
           </Button>
