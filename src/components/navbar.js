@@ -20,6 +20,8 @@ const Navbar = ({ children }) => {
         return "Transactions";
       case "/main":
         return "Home";
+      case "/add-budget":
+        return "Add Budget";
       default:
         return "Dashboard";
     }
@@ -37,7 +39,7 @@ const Navbar = ({ children }) => {
           <h1 className=" text-xl font-semibold">{getLabel()}</h1>
           <Menu />
         </div>
-        <div className=" translate-y-16 h-[calc(100vh-64px)] overflow-auto">
+        <div className=" translate-y-16 h-[calc(100dvh-64px)] overflow-auto">
           {children}
         </div>
       </div>

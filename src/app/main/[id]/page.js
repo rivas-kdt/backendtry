@@ -1,20 +1,22 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { PlusSquareIcon } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
 
 export default function Range() {
   const [budgets, setBudgets] = useState([]);
   const [info, setInfo] = useState([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
   const params = useParams();
   const id = params.id;
 
   const fetchBudgets = async () => {
-    const response = await fetch(`/api/v2/tracking_range/budget?id=${id}`, {
+    const response = await fetch(`/api/v2/tracking_range/budget?range_id=${id}`, {
       method: "GET",
     });
     const data = await response.json();
@@ -35,7 +37,7 @@ export default function Range() {
     setLoading(false);
   }, []);
 
-  console.log(info);
+  console.log(budgets);
 
   return (
     <div className=" h-full p-4 flex flex-col space-y-4">
@@ -67,26 +69,26 @@ export default function Range() {
       </div>
       <div className=" flex flex-col gap-2">
         <header className=" flex justify-between items-center">
-          <p className=" text-lg font-bold">BASICS</p>
-          <Button size={"icon"}>
+          <p className=" text-lg font-bold">Budget</p>
+          <Button size={"icon"} onClick={()=>router.push(`/add-budget?range_id=${id}&user_id=1`)}>
             <PlusSquareIcon />
           </Button>
         </header>
         <ScrollArea className=" w-full ">
           <div className=" flex gap-2">
-            {budgets.map((b) => {
+            {!loading && budgets.map((b) => {
               return (
                 <div
                   key={b.id}
-                  className=" w-[200px] aspect-video flex flex-col bg-amber-300 p-2"
+                  className={`bg-gradient-to-bl to-[#a74d4d] via-[#c25656] from-[#da5454] text-white w-[200px] aspect-video flex flex-col justify-between rounded-md border p-4`}
                 >
-                  <p className=" w-full text-center text-lg font-bold">
-                    {b.description}
+                  <p className=" text-lg font-bold">
+                    {b.name}
                   </p>
-                  <p className=" w-full text-center text-lg font-bold">
-                    {b.category}
-                  </p>
-                  <div>{b.amount}</div>
+                  <div className=" flex flex-col gap-2">
+                    <div>PHP {b.amount - 1950} remaining</div>
+                    <Progress value={((b.amount - 1950) / b.amount) * 100} className=" bg-white"/>
+                  </div>
                 </div>
               );
             })}
