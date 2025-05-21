@@ -1,7 +1,7 @@
 "use client";
 import { Label } from "@/components/ui/label";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -15,7 +15,7 @@ import {
 
 export default function AddBudgetpage() {
   const searchParams = useSearchParams();
-  const router = useRouter();
+  const router = useRouter()
   const rangeID = searchParams.get("range_id");
   const userId = searchParams.get("user_id");
   const [name, setName] = useState("");
@@ -44,7 +44,7 @@ export default function AddBudgetpage() {
       );
       if (!res.ok) throw new Error("Failed to create budget");
       const data = await res.json();
-      router.back();
+      router.back()
       console.log("Success:", data);
     } catch (err) {
       console.error("Submit error:", err);
@@ -72,60 +72,58 @@ export default function AddBudgetpage() {
     }
   };
 
-  console.log(selectedCategory);
+  console.log(selectedCategory)
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <div className=" h-full p-4">
-        <form onSubmit={handleSubmit} className=" flex flex-col gap-2">
-          <div className=" flex flex-col rounded-lg border p-2 gap-2">
-            <Label className=" text-xl">Budget Name</Label>
-            <input
-              value={name}
-              className=" border-0 p-2 text-lg ring-0"
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          <div className=" flex flex-col rounded-lg border p-2 gap-2">
-            <Label className=" text-xl">Amount</Label>
-            <input
-              type="number"
-              value={amount}
-              className=" border-0 p-2 text-lg ring-0"
-              onChange={(e) => setAmount(e.target.value)}
-            />
-          </div>
-          <div className=" flex flex-col rounded-lg border p-2 gap-2">
-            <Label className=" text-xl">Description</Label>
-            <textarea
-              type="text"
-              placeholder="Write your description here..."
-              value={desc}
-              className=" border-0 p-2 text-lg ring-0"
-              onChange={(e) => setDesc(e.target.value)}
-              rows="4"
-            />
-          </div>
-          <Select
-            onValueChange={handleSelectCategory}
-            value={selectedCategory?.id}
-          >
-            <SelectTrigger className=" text-lg">
-              <SelectValue placeholder={"Select category..."} />
-            </SelectTrigger>
-            <SelectContent>
-              {categories.map((c) => (
-                <SelectItem key={c.id} value={c.id} className=" text-lg">
-                  {c.category}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <div className=" w-full p-4 flex justify-end">
-            <Button type="submit">Submit</Button>
-          </div>
-        </form>
-      </div>
-    </Suspense>
+    <div className=" h-full p-4">
+      <form onSubmit={handleSubmit} className=" flex flex-col gap-2">
+        <div className=" flex flex-col rounded-lg border p-2 gap-2">
+          <Label className=" text-xl">Budget Name</Label>
+          <input
+            value={name}
+            className=" border-0 p-2 text-lg ring-0"
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className=" flex flex-col rounded-lg border p-2 gap-2">
+          <Label className=" text-xl">Amount</Label>
+          <input
+            type="number"
+            value={amount}
+            className=" border-0 p-2 text-lg ring-0"
+            onChange={(e) => setAmount(e.target.value)}
+          />
+        </div>
+        <div className=" flex flex-col rounded-lg border p-2 gap-2">
+          <Label className=" text-xl">Description</Label>
+          <textarea
+            type="text"
+            placeholder="Write your description here..."
+            value={desc}
+            className=" border-0 p-2 text-lg ring-0"
+            onChange={(e) => setDesc(e.target.value)}
+            rows="4"
+          />
+        </div>
+        <Select
+          onValueChange={handleSelectCategory}
+          value={selectedCategory?.id}
+        >
+          <SelectTrigger className=" text-lg">
+            <SelectValue placeholder={"Select category..."}/>
+          </SelectTrigger>
+          <SelectContent>
+            {categories.map((c) => (
+              <SelectItem key={c.id} value={c.id} className=" text-lg">
+                {c.category}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <div className=" w-full p-4 flex justify-end">
+          <Button type="submit">Submit</Button>
+        </div>
+      </form>
+    </div>
   );
 }
