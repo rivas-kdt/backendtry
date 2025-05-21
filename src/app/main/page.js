@@ -10,16 +10,16 @@ export default function MainScreen() {
       </div>
       <div className=" flex flex-col gap-2">
         <header className=" flex justify-between items-center">
-          <p className=" text-xl font-bold">BASICS</p>
+          <p className=" text-lg font-bold">BASICS</p>
           <Button size={"icon"}>
             <PlusSquareIcon />
           </Button>
         </header>
         <ScrollArea className=" w-full ">
           <div className=" flex gap-2">
-            <div className=" w-[200px] h-[200px] bg-amber-300"></div>
-            <div className=" w-[200px] h-[200px] bg-amber-300"></div>
-            <div className=" w-[200px] h-[200px] bg-amber-300"></div>
+            <div className=" w-[200px] aspect-video bg-amber-300"></div>
+            <div className=" w-[200px] aspect-video bg-amber-300"></div>
+            <div className=" w-[200px] aspect-video bg-amber-300"></div>
           </div>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
