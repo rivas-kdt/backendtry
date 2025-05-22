@@ -1,254 +1,100 @@
 "use client";
+import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { PlusSquareIcon } from "lucide-react";
+import { useState, useEffect } from "react";
 import { Label } from "@/components/ui/label";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ChevronDown, PlusSquare } from "lucide-react";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Progress } from "@/components/ui/progress";
 
-export default function BudgetPage() {
-  const [category, setCategory] = useState("");
-  const [amount, setAmount] = useState("");
-  const [incomeCategory, setIncomeCategory] = useState([]);
-  const [expenseCategory, setExpenseCategory] = useState([]);
+export default function Range() {
+  const [budgets, setBudgets] = useState([]);
+  const [info, setInfo] = useState([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
   const params = useParams();
   const id = params.id;
 
-  const fetchIncomeCategory = async () => {
-    const response = await fetch(`/api/budget/category?id=${id}&type=Income`, {
+  const fetchBudgets = async () => {
+    const response = await fetch(`/api/v2/tracking_range/budget?range_id=${id}`, {
       method: "GET",
     });
     const data = await response.json();
-    setIncomeCategory(data);
+    setBudgets(data);
   };
 
-  const fetchExpenseCategory = async () => {
-    const response = await fetch(`/api/budget/category?id=${id}&type=Expense`, {
+  const fetchInfo = async () => {
+    const response = await fetch(`/api/v2/tracking_range?id=${id}`, {
       method: "GET",
     });
     const data = await response.json();
-    setExpenseCategory(data);
+    setInfo(data);
   };
 
   useEffect(() => {
-    fetchIncomeCategory();
+    fetchBudgets();
+    fetchInfo();
     setLoading(false);
   }, []);
 
-  useEffect(() => {
-    fetchExpenseCategory();
-  }, []);
-
-  const handleSubmitIncome = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch("/api/budget/category", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          budget_id: id,
-          name: category,
-          type: "Income",
-          amount: amount,
-        }),
-      });
-      if (!res.ok) throw new Error("Failed to create budget");
-      const data = await res.json();
-      console.log("Success:", data);
-    } catch (err) {
-      console.error("Submit error:", err);
-    }
-  };
-
-  console.log(incomeCategory);
-
-  const handleSubmitExpense = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch("/api/budget/category", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          budget_id: id,
-          name: category,
-          type: "Expense",
-          amount: amount,
-        }),
-      });
-      if (!res.ok) throw new Error("Failed to create budget");
-      const data = await res.json();
-      console.log("Success:", data);
-    } catch (err) {
-      console.error("Submit error:", err);
-    }
-  };
+  console.log(budgets);
 
   return (
-    <div className=" h-full bg-white flex flex-col gap-4 p-4">
-      <div className=" grid grid-cols-2 gap-4">
-        <div className=" w-full h-auto aspect-square bg-black rounded-lg"></div>
-        <div className=" w-full h-auto aspect-square bg-black rounded-lg"></div>
+    <div className=" h-full p-4 flex flex-col space-y-4">
+      <div className=" w-full aspect-video card rounded-lg text-white p-4 flex flex-col justify-between">
+        <header className=" font-bold text-2xl">
+          <h1>{info[0]?.name}</h1>
+          <div className=" flex gap-2 text-lg text-white/75 ">
+            <Label className=" text-lg font-normal">Goal</Label>
+            <p className=" text-sm font-normal">
+              PHP
+              <span className=" text-lg">{info[0]?.goal}</span>
+            </p>
+          </div>
+        </header>
+        <div className=" flex flex-col gap-2">
+          <div className=" flex justify-between">
+            <Label className=" text-xl">Savings goal</Label>
+            <p>
+              PHP <span className=" text-2xl font-bold">{info[0]?.goal}</span>
+            </p>
+          </div>
+          <div className=" flex justify-between">
+            <Label className=" text-xl">Net Worth</Label>
+            <p>
+              PHP <span className=" text-2xl font-bold">{info[0]?.goal}</span>
+            </p>
+          </div>
+        </div>
       </div>
-      <div className=" grid grid-rows-2 gap-4">
-        {/* <div className=" w-full border rounded-lg p-2 px-4 flex justify-between items-center">
-          <Button size={"icon"} variant="ghost">
-            <ChevronDown />
+      <div className=" flex flex-col gap-2">
+        <header className=" flex justify-between items-center">
+          <p className=" text-lg font-bold">Budget</p>
+          <Button size={"icon"} onClick={()=>router.push(`/add-budget?range_id=${id}&user_id=1`)}>
+            <PlusSquareIcon />
           </Button>
-          <div className=" w-[80%]">
-            <h1 className=" text-xl font-bold">NNN INKKKK</h1>
-            <p className=" text-xl">123321</p>
-          </div>
-          <Button size={"icon"}>
-            <PlusSquare />
-          </Button>
-        </div> */}
-        <Collapsible className="  border rounded-lg flex flex-col justify-center">
-          <div className=" w-full py-5 px-4 flex justify-between items-center">
-            <CollapsibleTrigger asChild>
-              <Button size={"icon"} variant="ghost">
-                <ChevronDown />
-              </Button>
-            </CollapsibleTrigger>
-            <div className=" w-[80%]">
-              <h1 className=" text-xl font-bold">NNN INKKKK</h1>
-              <p className=" text-xl">123321</p>
-            </div>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button size={"icon"}>
-                  <PlusSquare />
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[400px]">
-                <DialogHeader>
-                  <DialogTitle>Create budget</DialogTitle>
-                </DialogHeader>
-                <form onSubmit={handleSubmitIncome} className="grid gap-4 py-4">
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right">
-                      Name
-                    </Label>
-                    <Input
-                      id="category"
-                      value={category}
-                      onChange={(e) => setCategory(e.target.value)}
-                      className="col-span-3"
-                    />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right">
-                      Goal
-                    </Label>
-                    <Input
-                      id="amount"
-                      value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
-                      className="col-span-3"
-                    />
-                  </div>
-                  <DialogFooter>
-                    <Button type="submit">Submit</Button>
-                  </DialogFooter>
-                </form>
-              </DialogContent>
-            </Dialog>
-          </div>
-          <CollapsibleContent className=" flex flex-col border-t p-2">
-            {incomeCategory.map((ic) => {
+        </header>
+        <ScrollArea className=" w-full ">
+          <div className=" flex gap-2">
+            {!loading && budgets.map((b) => {
               return (
-                <div key={ic.id} className=" border-b p-2 space-y-2">
-                  <h1 className=" text-lg font-bold">{ic.name}</h1>
-                  <div className=" grid grid-cols-3 items-center w-full *:text-center">
-                    <div>Goal</div>
-                    <div>Earned</div>
-                    <div>To Reach</div>
-                    <div>15000</div>
-                    <div>11500</div>
-                    <div>15000</div>
+                <div
+                  key={b.id}
+                  className={`bg-gradient-to-bl to-[#a74d4d] via-[#c25656] from-[#da5454] text-white w-[200px] aspect-video flex flex-col justify-between rounded-md border p-4`}
+                >
+                  <p className=" text-lg font-bold">
+                    {b.name}
+                  </p>
+                  <div className=" flex flex-col gap-2">
+                    <div>PHP {b.amount - 1950} remaining</div>
+                    <Progress value={((b.amount - 1950) / b.amount) * 100} className=" bg-white"/>
                   </div>
                 </div>
               );
             })}
-          </CollapsibleContent>
-        </Collapsible>
-        <Collapsible className="  border rounded-lg flex flex-col justify-center">
-          <div className=" w-full py-5 px-4 flex justify-between items-center">
-            <CollapsibleTrigger asChild>
-              <Button size={"icon"} variant="ghost">
-                <ChevronDown />
-              </Button>
-            </CollapsibleTrigger>
-            <div className=" w-[80%]">
-              <h1 className=" text-xl font-bold">TOTAL EXPPPPP</h1>
-              <p className=" text-xl">123321</p>
-            </div>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button size={"icon"}>
-                  <PlusSquare />
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[400px]">
-                <DialogHeader>
-                  <DialogTitle>Create budget</DialogTitle>
-                </DialogHeader>
-                <form
-                  onSubmit={handleSubmitExpense}
-                  className="grid gap-4 py-4"
-                >
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right">
-                      Name
-                    </Label>
-                    <Input
-                      id="category"
-                      value={category}
-                      onChange={(e) => setCategory(e.target.value)}
-                      className="col-span-3"
-                    />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right">
-                      Goal
-                    </Label>
-                    <Input
-                      id="amount"
-                      value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
-                      className="col-span-3"
-                    />
-                  </div>
-                  <DialogFooter>
-                    <Button type="submit">Submit</Button>
-                  </DialogFooter>
-                </form>
-              </DialogContent>
-            </Dialog>
           </div>
-          <CollapsibleContent className=" flex flex-col border-t p-2">
-            <div>1</div>
-            <div>2</div>
-            <div>3</div>
-          </CollapsibleContent>
-        </Collapsible>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       </div>
     </div>
   );

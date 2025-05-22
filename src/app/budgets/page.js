@@ -26,7 +26,7 @@ export default function BudgetsPage() {
   }
 
   const fetchBudgets = async () => {
-    const response = await fetch("/api/budget", { method: "GET" });
+    const response = await fetch("/api/v2/tracking_range", { method: "GET" });
     const data = await response.json();
     setBudgets(data);
   };
@@ -38,41 +38,41 @@ export default function BudgetsPage() {
 
   console.log(budgets);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formattedStart = formatDateToYMD(startDate);
-    const formattedEnd = formatDateToYMD(endDate);
-    try {
-      const res = await fetch("/api/budget", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          start: formattedStart,
-          end: formattedEnd,
-        }),
-      });
-      if (!res.ok) throw new Error("Failed to create budget");
-      const data = await res.json();
-      console.log("Success:", data);
-    } catch (err) {
-      console.error("Submit error:", err);
-    }
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const formattedStart = formatDateToYMD(startDate);
+  //   const formattedEnd = formatDateToYMD(endDate);
+  //   try {
+  //     const res = await fetch("/api/budget", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         name,
+  //         start: formattedStart,
+  //         end: formattedEnd,
+  //       }),
+  //     });
+  //     if (!res.ok) throw new Error("Failed to create budget");
+  //     const data = await res.json();
+  //     console.log("Success:", data);
+  //   } catch (err) {
+  //     console.error("Submit error:", err);
+  //   }
+  // };
 
   return (
     <div className=" p-4 bg-background h-full ">
       <div className=" flex justify-between mb-4">
-        <h1 className=" text-2xl font-bold">Budgets</h1>
-        <Dialog>
+        <h1 className=" text-2xl font-bold">Tracking Range</h1>
+        {/* <Dialog>
           <DialogTrigger asChild>
-            <Button variant="outline">Create Budget</Button>
+            <Button variant="outline">Create Tracking Range</Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>Create budget</DialogTitle>
+              <DialogTitle>Create Tracking Range</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
@@ -108,7 +108,7 @@ export default function BudgetsPage() {
               </DialogFooter>
             </form>
           </DialogContent>
-        </Dialog>
+        </Dialog> */}
       </div>
       <div className=" flex flex-col items-center gap-4">
         {!loading && budgets.map((b) => {
@@ -118,7 +118,7 @@ export default function BudgetsPage() {
               href={`/budgets/${b.id}`}
               className=" bg-card p-4 rounded-md w-1/2 border text-center"
             >
-              {b.name}
+              {b.name}  -  {b.goal}
             </Link>
           );
         })}
