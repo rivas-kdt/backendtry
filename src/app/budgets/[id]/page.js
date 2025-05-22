@@ -2,10 +2,11 @@
 import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { PlusSquareIcon } from "lucide-react";
+import { Plus, PlusSquareIcon } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
+import Link from "next/link";
 
 export default function Range() {
   const [budgets, setBudgets] = useState([]);
@@ -16,9 +17,12 @@ export default function Range() {
   const id = params.id;
 
   const fetchBudgets = async () => {
-    const response = await fetch(`/api/v2/tracking_range/budget?range_id=${id}`, {
-      method: "GET",
-    });
+    const response = await fetch(
+      `/api/v2/tracking_range/budget?range_id=${id}`,
+      {
+        method: "GET",
+      }
+    );
     const data = await response.json();
     setBudgets(data);
   };
@@ -70,28 +74,30 @@ export default function Range() {
       <div className=" flex flex-col gap-2">
         <header className=" flex justify-between items-center">
           <p className=" text-lg font-bold">Budget</p>
-          <Button size={"icon"} onClick={()=>router.push(`/add-budget?range_id=${id}&user_id=1`)}>
-            <PlusSquareIcon />
-          </Button>
+          <Link href={"/add-budget?range_id=${id}&user_id=1"} className=" bg-black p-1 rounded-md text-white">
+            <Plus className=" w-6 h-6"/>
+          </Link>
         </header>
         <ScrollArea className=" w-full ">
           <div className=" flex gap-2">
-            {!loading && budgets.map((b) => {
-              return (
-                <div
-                  key={b.id}
-                  className={`bg-gradient-to-bl to-[#a74d4d] via-[#c25656] from-[#da5454] text-white w-[200px] aspect-video flex flex-col justify-between rounded-md border p-4`}
-                >
-                  <p className=" text-lg font-bold">
-                    {b.name}
-                  </p>
-                  <div className=" flex flex-col gap-2">
-                    <div>PHP {b.amount - 1950} remaining</div>
-                    <Progress value={((b.amount - 1950) / b.amount) * 100} className=" bg-white"/>
+            {!loading &&
+              budgets.map((b) => {
+                return (
+                  <div
+                    key={b.id}
+                    className={`bg-gradient-to-bl to-[#a74d4d] via-[#c25656] from-[#da5454] text-white w-[200px] aspect-video flex flex-col justify-between rounded-md border p-4`}
+                  >
+                    <p className=" text-lg font-bold">{b.name}</p>
+                    <div className=" flex flex-col gap-2">
+                      <div>PHP {b.amount - 1950} remaining</div>
+                      <Progress
+                        value={((b.amount - 1950) / b.amount) * 100}
+                        className=" bg-white"
+                      />
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>

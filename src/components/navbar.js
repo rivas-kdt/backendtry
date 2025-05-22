@@ -29,11 +29,13 @@ const Navbar = ({ children }) => {
     }
   };
 
+  const rootPath = ["/","/budgets","/wallet"]
+
   if (isMobile) {
     return (
       <div className=" max-h-screen min-h-screen flex flex-col">
         <div className=" header flex items-center justify-between px-4 border-b fixed w-full h-16 bg-background">
-          {pathname === "/" ? (
+          {rootPath.includes(pathname) ? (
             <></>
           ) : (
             <Button onClick={() => router.back()}>Back</Button>
