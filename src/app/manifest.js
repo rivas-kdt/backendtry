@@ -3,7 +3,7 @@
 export default function manifest() {
   return {
     name: "Xpense",
-    short_name: "XP",
+    short_name: "Xpense",
     description: "budget Tracker",
     start_url: "/",
     display: "standalone",
