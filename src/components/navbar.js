@@ -4,7 +4,14 @@ import { React } from "react";
 import { Button } from "./ui/button";
 import { usePathname, useRouter } from "next/navigation";
 import Menu from "./menu";
-import { File, HomeIcon, PieChart, PlusCircle, PlusSquare, Wallet } from "lucide-react";
+import {
+  File,
+  HomeIcon,
+  PieChart,
+  PlusCircle,
+  PlusSquare,
+  Wallet,
+} from "lucide-react";
 import Link from "next/link";
 
 const Navbar = ({ children }) => {
@@ -29,13 +36,23 @@ const Navbar = ({ children }) => {
     }
   };
 
-  const rootPath = ["/","/budgets","/wallet"]
+  const staticPath = ["/", "/budgets", "/wallet"];
+  const dynamicPaths = [/^\/budgets\/\d+$/];
+
+  // let addTransactionhref = "/add-transaction";
+  // if (pathname.startsWith("/budgets/")) {
+  //   const id = pathname.split("/")[2]; // Extract the ID from the pathname
+  //   href = `/add-transaction?id=${id}`;
+  // }
+
+  console.log(dynamicPaths);
 
   if (isMobile) {
     return (
       <div className=" max-h-screen min-h-screen flex flex-col">
         <div className=" header flex items-center justify-between px-4 border-b fixed w-full h-16 bg-background">
-          {rootPath.includes(pathname) ? (
+          {staticPath.includes(pathname) ||
+          dynamicPaths.some((regex) => regex.test(pathname)) ? (
             <></>
           ) : (
             <Button onClick={() => router.back()}>Back</Button>
@@ -49,22 +66,29 @@ const Navbar = ({ children }) => {
         <div className=" translate-y-16 h-16 flex items-center border-t w-full">
           <div className=" absolute flex items-center justify-between w-full px-4">
             <Link href={"/budgets"}>
-              <HomeIcon className=" w-8 h-8"/>
+              <HomeIcon className=" w-8 h-8" />
             </Link>
             <Link href={"/main"}>
-              <File className=" w-8 h-8"/>
+              <File className=" w-8 h-8" />
             </Link>
-            <Link href={"/transactions"} className=" absolute left-1/2 -translate-x-1/2 -translate-y-[24px] rounded-full bg-background p-5 border-t">
-              <PlusCircle className=" w-12 h-12"/>
+            <Link
+              href={`/add-transaction${
+                pathname.startsWith("/budgets/")
+                  ? `?range_id=${pathname.split("/")[2]}`
+                  : ``
+              }`}
+              className=" absolute left-1/2 -translate-x-1/2 -translate-y-[24px] rounded-full bg-background p-5 border-t"
+            >
+              <PlusCircle className=" w-12 h-12" />
             </Link>
             <Link href={"/"} className=" invisible">
-              <PlusCircle className=" w-12 h-12"/>
+              <PlusCircle className=" w-12 h-12" />
             </Link>
             <Link href={"/main"}>
-              <PieChart className=" w-8 h-8"/>
+              <PieChart className=" w-8 h-8" />
             </Link>
             <Link href={"/wallet"}>
-              <Wallet className=" w-8 h-8"/>
+              <Wallet className=" w-8 h-8" />
             </Link>
           </div>
         </div>

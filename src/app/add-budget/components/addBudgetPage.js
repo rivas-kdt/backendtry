@@ -28,7 +28,7 @@ export default function AddBudgetpage() {
     e.preventDefault();
     try {
       const res = await fetch(
-        `/api/v2/tracking_range/budget?range_id=${rangeID}`,
+        `/api/v2/tracking_range/${rangeID}/budget`,
         {
           method: "POST",
           headers: {

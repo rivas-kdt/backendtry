@@ -18,7 +18,7 @@ export default function Range() {
 
   const fetchBudgets = async () => {
     const response = await fetch(
-      `/api/v2/tracking_range/budget?range_id=${id}`,
+      `/api/v2/tracking_range/${id}/budget`,
       {
         method: "GET",
       }
