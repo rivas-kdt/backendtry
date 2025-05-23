@@ -111,19 +111,19 @@ export default function BudgetsPage() {
           </DialogContent>
         </Dialog> */}
       </div>
-      <div className=" grid grid-cols-2 items-center gap-4">
+      <div className=" flex flex-col justify-center w-full items-center gap-4">
         {!loading &&
           budgets.map((b) => {
             return (
               <Link
                 key={b.id}
                 href={`/budgets/${b.id}`}
-                className=" p-4 rounded-md aspect-video text-center blue"
+                className=" rounded-md text-center blue w-3/4 "
               >
-                <div className=" w-full h-full flex flex-col justify-between">
+                <div className=" w-full h-full flex flex-col justify-between gap-4 p-5">
                   <div className=" flex justify-between">
-                    <p className=" text-lg font-bold">{b.name}</p>
-                    <Wallet />
+                    <p className=" text-2xl font-bold">{b.name}</p>
+                    <Wallet className=" w-8 h-8" />
                   </div>
                   <p className=" text-4xl font-bold">{b.goal}</p>
                 </div>

@@ -80,16 +80,16 @@ const Navbar = ({ children }) => {
                 }`}
               />
             </Link>
-            <Link href={"/main"}
+            <Link href={"/transactions"}
               className={`flex flex-col gap-1 items-center`}>
               <File
                 className={`transition-transform duration-300 transform w-8 h-8 ${
-                  pathname === "/main" ? "-translate-y-2" : "translate-y-0"
+                  pathname === "/transactions" ? "-translate-y-2" : "translate-y-0"
                 }`}
               />
               <div
                 className={`transition-all duration-300 absolute bottom-2 rounded-lg bg-background ${
-                  pathname === "/main"
+                  pathname === "/transactions"
                     ? "w-6 h-[6px] opacity-100"
                     : "w-0 h-0 opacity-0"
                 }`}
@@ -108,16 +108,16 @@ const Navbar = ({ children }) => {
             <Link href={"/"} className=" invisible">
               <PlusCircle className=" w-12 h-12" />
             </Link>
-            <Link href={"/main"}
+            <Link href={"/reports"}
               className={`flex flex-col gap-1 items-center`}>
               <PieChart
                 className={`transition-transform duration-300 transform w-8 h-8 ${
-                  pathname === "/main" ? "-translate-y-2" : "translate-y-0"
+                  pathname === "/reports" ? "-translate-y-2" : "translate-y-0"
                 }`}
               />
               <div
                 className={`transition-all duration-300 absolute bottom-2 rounded-lg bg-background ${
-                  pathname === "/main"
+                  pathname === "/reports"
                     ? "w-6 h-[6px] opacity-100"
                     : "w-0 h-0 opacity-0"
                 }`}

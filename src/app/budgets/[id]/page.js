@@ -72,7 +72,7 @@ export default function Range() {
         <header className=" flex justify-between items-center">
           <p className=" text-lg font-bold">Budget</p>
           <Link
-            href={"/add-budget?range_id=${id}&user_id=1"}
+            href={`/add-budget?range_id=${id}&user_id=1`}
             className=" p-1 rounded-md bg-background text-foreground"
           >
             <Plus className=" w-6 h-6" />
