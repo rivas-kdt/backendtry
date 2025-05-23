@@ -64,12 +64,36 @@ const Navbar = ({ children }) => {
           {children}
         </div>
         <div className=" translate-y-16 h-16 flex items-center border-t w-full">
-          <div className=" absolute flex items-center justify-between w-full px-4">
-            <Link href={"/budgets"}>
-              <HomeIcon className=" w-8 h-8" />
+          <div className=" absolute flex items-center justify-between w-full px-8">
+            <Link href={"/budgets"}
+              className={`flex flex-col gap-1 items-center`}>
+              <HomeIcon
+                className={`transition-transform duration-300 transform w-8 h-8 ${
+                  pathname === "/budgets" ? "-translate-y-2" : "translate-y-0"
+                }`}
+              />
+              <div
+                className={`transition-all duration-300 absolute bottom-2 rounded-lg bg-black ${
+                  pathname === "/budgets"
+                    ? "w-6 h-[6px] opacity-100"
+                    : "w-0 h-0 opacity-0"
+                }`}
+              />
             </Link>
-            <Link href={"/main"}>
-              <File className=" w-8 h-8" />
+            <Link href={"/main"}
+              className={`flex flex-col gap-1 items-center`}>
+              <File
+                className={`transition-transform duration-300 transform w-8 h-8 ${
+                  pathname === "/main" ? "-translate-y-2" : "translate-y-0"
+                }`}
+              />
+              <div
+                className={`transition-all duration-300 absolute bottom-2 rounded-lg bg-black ${
+                  pathname === "/main"
+                    ? "w-6 h-[6px] opacity-100"
+                    : "w-0 h-0 opacity-0"
+                }`}
+              />
             </Link>
             <Link
               href={`/add-transaction${
@@ -84,11 +108,37 @@ const Navbar = ({ children }) => {
             <Link href={"/"} className=" invisible">
               <PlusCircle className=" w-12 h-12" />
             </Link>
-            <Link href={"/main"}>
-              <PieChart className=" w-8 h-8" />
+            <Link href={"/main"}
+              className={`flex flex-col gap-1 items-center`}>
+              <PieChart
+                className={`transition-transform duration-300 transform w-8 h-8 ${
+                  pathname === "/main" ? "-translate-y-2" : "translate-y-0"
+                }`}
+              />
+              <div
+                className={`transition-all duration-300 absolute bottom-2 rounded-lg bg-black ${
+                  pathname === "/main"
+                    ? "w-6 h-[6px] opacity-100"
+                    : "w-0 h-0 opacity-0"
+                }`}
+              />
             </Link>
-            <Link href={"/wallet"}>
-              <Wallet className=" w-8 h-8" />
+            <Link
+              href={"/wallet"}
+              className={`flex flex-col gap-1 items-center`}
+            >
+              <Wallet
+                className={`transition-transform duration-300 transform w-8 h-8 ${
+                  pathname === "/wallet" ? "-translate-y-2" : "translate-y-0"
+                }`}
+              />
+              <div
+                className={`transition-all duration-300 absolute bottom-2 rounded-lg bg-black ${
+                  pathname === "/wallet"
+                    ? "w-6 h-[6px] opacity-100"
+                    : "w-0 h-0 opacity-0"
+                }`}
+              />
             </Link>
           </div>
         </div>

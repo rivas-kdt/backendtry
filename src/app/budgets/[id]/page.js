@@ -17,12 +17,9 @@ export default function Range() {
   const id = params.id;
 
   const fetchBudgets = async () => {
-    const response = await fetch(
-      `/api/v2/tracking_range/${id}/budget`,
-      {
-        method: "GET",
-      }
-    );
+    const response = await fetch(`/api/v2/tracking_range/${id}/budget`, {
+      method: "GET",
+    });
     const data = await response.json();
     setBudgets(data);
   };
@@ -74,25 +71,26 @@ export default function Range() {
       <div className=" flex flex-col gap-2">
         <header className=" flex justify-between items-center">
           <p className=" text-lg font-bold">Budget</p>
-          <Link href={"/add-budget?range_id=${id}&user_id=1"} className=" bg-black p-1 rounded-md text-white">
-            <Plus className=" w-6 h-6"/>
+          <Link
+            href={"/add-budget?range_id=${id}&user_id=1"}
+            className=" p-1 rounded-md"
+          >
+            <Plus className=" w-6 h-6" />
           </Link>
         </header>
         <ScrollArea className=" w-full ">
           <div className=" flex gap-2">
             {!loading &&
               budgets.map((b) => {
+                const style = ` w-[200px] aspect-video flex flex-col justify-between rounded-lg border p-4 ${b.color}`;
                 return (
-                  <div
-                    key={b.id}
-                    className={`bg-gradient-to-bl to-[#a74d4d] via-[#c25656] from-[#da5454] text-white w-[200px] aspect-video flex flex-col justify-between rounded-md border p-4`}
-                  >
+                  <div key={b.id} className={style}>
                     <p className=" text-lg font-bold">{b.name}</p>
                     <div className=" flex flex-col gap-2">
                       <div>PHP {b.amount - 1950} remaining</div>
                       <Progress
                         value={((b.amount - 1950) / b.amount) * 100}
-                        className=" bg-white"
+                        className=" bg-neutral-300"
                       />
                     </div>
                   </div>

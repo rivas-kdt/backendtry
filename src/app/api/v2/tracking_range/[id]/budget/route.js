@@ -6,9 +6,9 @@ const sql = neon(process.env.DATABASE_URL);
 export async function GET(request, { params }) {
   const { id } = await params;
   try {
-    let query = `SELECT b.id, b.name, b.description, b.amount, c.category, c.type FROM v2.budget b JOIN v2.category c ON c.id=b.category WHERE range_id = $1`;
+    let query = `SELECT b.id, b.name, b.description, b.amount, c.category, c.type, co.color FROM v2.budget b JOIN v2.category c ON c.id=b.category LEFT JOIN v2.colors co ON co.id=b.color WHERE range_id = $1`;
     const response = await sql.query(query, [id]);
-    return NextResponse.json(response ?? [], { status: 200 });
+    return NextResponse.json(response, { status: 200 });
   } catch (error) {
     console.error("GET Error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
