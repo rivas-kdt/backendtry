@@ -13,14 +13,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 import { DatePicker } from "@/components/datePicker";
+import { Wallet } from "lucide-react";
 
 export default function BudgetsPage() {
   const [name, setName] = useState("");
   const [startDate, setStart] = useState();
   const [endDate, setEnd] = useState();
   const [budgets, setBudgets] = useState([]);
-  const [loading, setLoading] = useState(true)
- 
+  const [loading, setLoading] = useState(true);
+
   function formatDateToYMD(date) {
     return new Date(date).toISOString().split("T")[0];
   }
@@ -33,7 +34,7 @@ export default function BudgetsPage() {
 
   useEffect(() => {
     fetchBudgets();
-    setLoading(false)
+    setLoading(false);
   }, []);
 
   console.log(budgets);
@@ -63,7 +64,7 @@ export default function BudgetsPage() {
   // };
 
   return (
-    <div className=" p-4 bg-background h-full ">
+    <div className=" p-4 h-full ">
       <div className=" flex justify-between mb-4">
         <h1 className=" text-2xl font-bold">Tracking Range</h1>
         {/* <Dialog>
@@ -110,18 +111,25 @@ export default function BudgetsPage() {
           </DialogContent>
         </Dialog> */}
       </div>
-      <div className=" flex flex-col items-center gap-4">
-        {!loading && budgets.map((b) => {
-          return (
-            <Link
-              key={b.id}
-              href={`/budgets/${b.id}`}
-              className=" bg-card p-4 rounded-md w-1/2 border text-center"
-            >
-              {b.name}  -  {b.goal}
-            </Link>
-          );
-        })}
+      <div className=" grid grid-cols-2 items-center gap-4">
+        {!loading &&
+          budgets.map((b) => {
+            return (
+              <Link
+                key={b.id}
+                href={`/budgets/${b.id}`}
+                className=" p-4 rounded-md aspect-video text-center blue"
+              >
+                <div className=" w-full h-full flex flex-col justify-between">
+                  <div className=" flex justify-between">
+                    <p className=" text-lg font-bold">{b.name}</p>
+                    <Wallet />
+                  </div>
+                  <p className=" text-4xl font-bold">{b.goal}</p>
+                </div>
+              </Link>
+            );
+          })}
       </div>
     </div>
   );

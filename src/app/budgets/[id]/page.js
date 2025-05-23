@@ -73,7 +73,7 @@ export default function Range() {
           <p className=" text-lg font-bold">Budget</p>
           <Link
             href={"/add-budget?range_id=${id}&user_id=1"}
-            className=" p-1 rounded-md"
+            className=" p-1 rounded-md bg-background text-foreground"
           >
             <Plus className=" w-6 h-6" />
           </Link>
@@ -82,9 +82,8 @@ export default function Range() {
           <div className=" flex gap-2">
             {!loading &&
               budgets.map((b) => {
-                const style = ` w-[200px] aspect-video flex flex-col justify-between rounded-lg border p-4 ${b.color}`;
                 return (
-                  <div key={b.id} className={style}>
+                  <div key={b.id} className={`text-white ${b.color} orange w-[200px] aspect-video flex flex-col justify-between rounded-lg opacity-85 p-4`}>
                     <p className=" text-lg font-bold">{b.name}</p>
                     <div className=" flex flex-col gap-2">
                       <div>PHP {b.amount - 1950} remaining</div>

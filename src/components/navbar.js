@@ -50,7 +50,7 @@ const Navbar = ({ children }) => {
   if (isMobile) {
     return (
       <div className=" max-h-screen min-h-screen flex flex-col">
-        <div className=" header flex items-center justify-between px-4 border-b fixed w-full h-16 bg-background">
+        <div className=" header flex items-center justify-between px-4 border-b fixed w-full h-16">
           {staticPath.includes(pathname) ||
           dynamicPaths.some((regex) => regex.test(pathname)) ? (
             <></>
@@ -73,7 +73,7 @@ const Navbar = ({ children }) => {
                 }`}
               />
               <div
-                className={`transition-all duration-300 absolute bottom-2 rounded-lg bg-black ${
+                className={`transition-all duration-300 absolute bottom-2 rounded-lg bg-background ${
                   pathname === "/budgets"
                     ? "w-6 h-[6px] opacity-100"
                     : "w-0 h-0 opacity-0"
@@ -88,7 +88,7 @@ const Navbar = ({ children }) => {
                 }`}
               />
               <div
-                className={`transition-all duration-300 absolute bottom-2 rounded-lg bg-black ${
+                className={`transition-all duration-300 absolute bottom-2 rounded-lg bg-background ${
                   pathname === "/main"
                     ? "w-6 h-[6px] opacity-100"
                     : "w-0 h-0 opacity-0"
@@ -101,7 +101,7 @@ const Navbar = ({ children }) => {
                   ? `?range_id=${pathname.split("/")[2]}`
                   : ``
               }`}
-              className=" absolute left-1/2 -translate-x-1/2 -translate-y-[24px] rounded-full bg-background p-5 border-t"
+              className=" absolute left-1/2 -translate-x-1/2 -translate-y-[24px] rounded-full bg-foreground p-5 border-t"
             >
               <PlusCircle className=" w-12 h-12" />
             </Link>
@@ -116,7 +116,7 @@ const Navbar = ({ children }) => {
                 }`}
               />
               <div
-                className={`transition-all duration-300 absolute bottom-2 rounded-lg bg-black ${
+                className={`transition-all duration-300 absolute bottom-2 rounded-lg bg-background ${
                   pathname === "/main"
                     ? "w-6 h-[6px] opacity-100"
                     : "w-0 h-0 opacity-0"
@@ -133,7 +133,7 @@ const Navbar = ({ children }) => {
                 }`}
               />
               <div
-                className={`transition-all duration-300 absolute bottom-2 rounded-lg bg-black ${
+                className={`transition-all duration-300 absolute bottom-2 rounded-lg bg-background ${
                   pathname === "/wallet"
                     ? "w-6 h-[6px] opacity-100"
                     : "w-0 h-0 opacity-0"

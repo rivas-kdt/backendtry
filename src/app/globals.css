@@ -142,13 +142,29 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-foreground text-background;
+  }
+  .orange {
+    @apply bg-gradient-to-r from-orange-600 to-orange-500 border-0
+  }
+  .blue {
+    @apply bg-gradient-to-r from-blue-500 to-blue-600 border-0
+  }
+  .red {
+    @apply bg-gradient-to-r from-red-500 to-red-800 border-0
+  }
+  .pink {
+    @apply bg-gradient-to-r from-fuchsia-600 to-pink-600 border-0
+  }
+  .black {
+    @apply bg-gradient-to-r from-[#0f172a]  to-[#334155] border border-white/35
   }
 }
 
 main {
   min-height: calc(100vh - 80px);
 }
+
 
 .card {
   background: linear-gradient(to top right, #4338ca, #1e40af, #164e63);
