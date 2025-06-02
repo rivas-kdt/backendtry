@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 
 export default async function middleware(req) {
   const path = req.nextUrl.pathname;
-  if (path === "/") {
-    return NextResponse.redirect(new URL("/budgets", req.nextUrl));
+  if (path === "/2") {
+    return NextResponse.redirect(new URL("/", req.nextUrl));
   }
 
   return NextResponse.next();

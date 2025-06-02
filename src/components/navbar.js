@@ -3,7 +3,6 @@ import { useIsMobile } from "@/hooks/useMobile";
 import { React } from "react";
 import { Button } from "./ui/button";
 import { usePathname, useRouter } from "next/navigation";
-import Menu from "./menu";
 import {
   File,
   HomeIcon,
@@ -58,7 +57,6 @@ const Navbar = ({ children }) => {
             <Button onClick={() => router.back()}>Back</Button>
           )}
           <h1 className=" text-xl font-semibold">{getLabel()}</h1>
-          <Menu />
         </div>
         <div className=" translate-y-16 h-[calc(100dvh-128px)] overflow-auto">
           {children}
